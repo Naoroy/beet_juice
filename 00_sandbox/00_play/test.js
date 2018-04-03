@@ -2,9 +2,9 @@ const writerModule = (function () {
     'use strict';
 
     const timeStamp = 140;
-
     const audio = new (window.AudioContext || window.webkitAudioContext)();
     const gainNode = audio.createGain();
+
     gainNode.connect(audio.destination);
     gainNode.gain.value = 0.1; // 10 %
 
@@ -12,7 +12,7 @@ const writerModule = (function () {
         this.o = audio.createOscillator();
         this.o.connect(gainNode);
         this.o.frequency.value = 440;
-        this.o.type = 'sawtooth';
+        this.o.type = 'sine';
         if (pitch) { this.o.detune.value = pitch * 100; }
     }
 
@@ -21,9 +21,7 @@ const writerModule = (function () {
         this.play = () => {
             this.osc.o.start();
             this.osc.o.stop(audio.currentTime + duration);
-            // this.osc.o.ended = () => {
-            //     this.osc.o.disconnect(gainNode);
-            // };
+			// this.osc.o.disconnect(gainNode);
             this.osc = new Oscillator(pitch);
         };
     };
@@ -137,9 +135,9 @@ const writerModule = (function () {
     const init = () => {
         btnInit();
         // playSequence(testPattern.pattern.section)
-        flow(testPattern.testSeq.sections);
-        flow(testPattern.testChord.sections);
-        flow(testPattern.bassline.sections);
+        flow(testPattern.metronome.sections);
+        // flow(testPattern.testChord.sections);
+        // flow(testPattern.bassline.sections);
     };
 
     window.addEventListener('DOMContentLoaded', init);
