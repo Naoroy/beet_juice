@@ -1,14 +1,14 @@
-const writerModule = (function () {
+const playerModule = (function () {
     'use strict';
 	const audio = new (window.AudioContext || window.webkitAudioContext)();
 	const gainNode = audio.createGain();
     const frameDelay = 140;
     gainNode.connect(audio.destination);
-    gainNode.gain.value = 0.1; // 10 %
+    gainNode.gain.value = 0.3; // 10 %
 	const Instrument = function () {
-		this.duration = .1;
+		this.duration = .3;
 		this.play = (pitch, when) => {
-			if (!pitch) { return }
+			if (!pitch && pitch !== 0) { return }
 			if (this.oscillator) { this.oscillator.disconnect(); }
 			if (typeof when !== 'number') { when = 0; }
 			this.oscillator = audio.createOscillator();
@@ -47,15 +47,19 @@ const writerModule = (function () {
         btnArray.forEach((btn, i) => {
 			const instrument = new Instrument();
 			btn.onclick = () => {
-				playBar(testPattern.metronome, 0);
-				playBar(testPattern.bassline, 0);
-				// playBar(testPattern.p, 0);
+				console.log(i);
+				instrument.play(i);
 			}
             btn.textContent = i + 1;
         });
     }
     const init = () => {
-        btnInit();
+        // btnInit();
+		// playBar(patternModule.metronome, 0);
+		// playBar(patternModule.bassline, 0);
     };
     window.addEventListener('DOMContentLoaded', init);
+	return {
+		playBar
+	}
 }());

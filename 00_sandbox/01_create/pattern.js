@@ -1,10 +1,10 @@
-const testPattern = (function () {
+const patternModule = (function () {
 	'use strict';
 	const Pattern = function (beats, bars) {
 		const initPattern = (beats, bars) => {
 			const pattern = [];
 			for (let i = 0; i < this.bars; i += 1) {
-				let bar = [];
+				const bar = [];
 				for (let i = 0; i < this.beats; i += 1) {
 					bar.push(null);
 				}
@@ -12,59 +12,22 @@ const testPattern = (function () {
 			}
 			return pattern;
 		};
-	    this.beats = beats ? beats : 4;
-	    this.bars = bars ? bars : 4;
+		this.beats = beats ? beats : 4;
+		this.bars = bars ? bars : 4;
 		this.bpm = 120;
 	    this.section = initPattern(this.beats, this.bars);
-	    this.insertIntoBeat = (bar ,beat , note) => {
-			this.section[bar][beat] = note;
+	    this.insertIntoBeat = (bar, beat ,pitch) => {
+			this.section[bar][beat] = this.section[bar][beat] === pitch ?
+				null :
+				pitch;
+			// console.log(this.section[bar][beat]);
 		};
-		this.setBPM = (bpm) => {
-			console.log(bpm, this);
-			this.bpm = bpm;
-		};
-		this.resetBar = () => {};
+		this.setBPM = (bpm) => { this.bpm = bpm; };
+		this.resetBar = () => { this.section = initPattern(this.beats, this.bars); };
 	};
-    // const p = new Pattern();
-    // p.section.forEach((bar, i) => {
-	// 	p.setBPM(180);
-    //     p.insertIntoBeat(i, 0, 0);
-    //     p.insertIntoBeat(i, 2, 5);
-    //     p.insertIntoBeat(i, 3, -8);
-    // });
-	// console.log(p);
 
 	// ===========test data===========
 
-    // const testSeq = {
-	//
-    //     sections: [
-    //         [
-    //             [-11, null, -8, -11],
-    //             [11, 1, null, 8],
-    //             [-11, null, -8, -11],
-    //             [11, 1, null, 8]
-    //         ],
-    //         [
-    //             [-11, null, -8, -11],
-    //             [11, 1, null, 8],
-    //             [-11, null, -8, -11],
-    //             [11, 1, null, 8]
-    //         ],
-    //         [
-    //             [-11, null, -8, -11],
-    //             [11, 1, null, 8],
-    //             [-11, null, -8, -11],
-    //             [11, 1, null, 8]
-    //         ],
-    //         [
-    //             [-11, null, -8, -11],
-    //             [11, 1, null, 8],
-    //             [-11, null, -8, -11],
-    //             [11, 1, null, 8]
-    //         ]
-    //     ]
-    // };
     const bassline = {
 		bpm: 180,
         section: [
@@ -109,6 +72,7 @@ const testPattern = (function () {
         ]
     };
 	return {
+		Pattern,
         metronome,
 		bassline,
     };
