@@ -1,0 +1,31 @@
+body {
+	background: #528;
+	font-family: sans-serif;
+	font-weight: 600;
+	font-size: 1.5rem
+}
+.piano-roll {
+	border-collapse: collapse;
+	margin: auto
+}
+.piano-roll td {
+	border: 2px solid black;
+	width: 3vw;
+	height: 3vw;
+}
+.piano-roll td {
+	transition: 200ms ease-out;
+	cursor: pointer;
+}
+.piano-roll td:hover {
+	transition: 100ms ease-out;
+	background: lightgreen;
+}
+.active {
+	background: lightgreen;
+}
+.play {
+	width: 30vw;
+	margin: auto;
+	font-size: 30;
+}

@@ -1,4 +1,4 @@
-const writerModule = (function () {
+const playerModule = (function () {
     'use strict';
 
     const timeStamp = 140;

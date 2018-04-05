@@ -1,4 +1,4 @@
-const soundApp = (function () {
+const application = (function () {
 	'use strict';
 
 	let pattern;
@@ -12,18 +12,21 @@ const soundApp = (function () {
 			}
 		});
 	};
-	const createTable = () => {
+	const playNote (note) = {}
+	const createPianoRoll = () => {
 		let td;
 		let tr;
 		const notes = [
 			'La',
 			'Si',
 			'Do',
-			'Re'
+			'Re',
+			'Mi',
+			'Fa',
+			'Sol',
 		];
 		const main = document.querySelector('#app');
 		const pianoRoll = document.createElement('table');
-		// const columnNumber = pattern.beats;
 		notes.forEach((note, pitch) => {
 			tr = document.createElement('tr');
 			let i = 0;
@@ -57,7 +60,7 @@ const soundApp = (function () {
 	}
 	const init = () => {
 		pattern = new patternModule.Pattern();
-		createTable();
+		createPianoRoll();
 		const playbtn = document.querySelector('.play');
 		playbtn.onclick = () => {
 			console.log(pattern);
