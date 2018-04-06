@@ -1,7 +1,9 @@
 const patternModule = (function () {
 	'use strict';
-	const Pattern = function (beats, bars) {
+
+	const Pattern = function (option) {
 		const initPattern = (beats, bars) => {
+			if (typeof beats !number || typeof bars !number) { return }
 			const pattern = [];
 			for (let i = 0; i < this.bars; i += 1) {
 				const bar = [];
@@ -10,20 +12,25 @@ const patternModule = (function () {
 				}
 				pattern.push(bar);
 			}
-			return pattern;
+			return pattern
 		};
-		this.beats = beats ? beats : 4;
-		this.bars = bars ? bars : 4;
-		this.bpm = 120;
+		this.beats = option.beats ? option.beats : 4;
+		this.bars = option.bars ? option.bars : 4;
+		this.bpm = option.bpm ? option.bpm : 120;
 	    this.section = initPattern(this.beats, this.bars);
-	    this.insertIntoBeat = (bar, beat ,pitch) => {
+	    this.insertNote = (bar, beat ,pitch) => {
+			if (typeof bar !== 'number' ||
+				typeof beat !== 'number' ||
+				typeof pitch !== 'number') { return }
 			this.section[bar][beat] = this.section[bar][beat] === pitch ?
 				null :
 				pitch;
-			// console.log(this.section[bar][beat]);
 		};
-		this.setBPM = (bpm) => { this.bpm = bpm; };
-		this.resetBar = () => { this.section = initPattern(this.beats, this.bars); };
+		this.setBPM = (bpm) => {
+			if (typeof bpm !== 'number') { return }
+			this.bpm = bpm;
+		};
+		this.resetSection = () => { this.section = initPattern(this.beats, this.bars) };
 	};
 
 	// ===========test data===========
@@ -72,8 +79,6 @@ const patternModule = (function () {
         ]
     };
 	return {
-		Pattern,
-        metronome,
-		bassline,
-    };
+		Pattern
+    }
 }());

@@ -1,12 +1,13 @@
 const playerModule = (function () {
     'use strict';
+
 	const audio = new (window.AudioContext || window.webkitAudioContext)();
 	const gainNode = audio.createGain();
-    const frameDelay = 140;
     gainNode.connect(audio.destination);
     gainNode.gain.value = 0.3; // 10 %
+
 	const Instrument = function () {
-		this.duration = .3;
+		this.duration = 1;
 		this.play = (pitch, when) => {
 			if (!pitch && pitch !== 0) { return }
 			if (this.oscillator) { this.oscillator.disconnect(); }
@@ -21,27 +22,29 @@ const playerModule = (function () {
 		this.setType = (type) => {};
 		this.setDuration = (duration) => {};
 	};
-	const playBar = (pattern, x) => {
+	const playSong = (pattern, x) => {
 		if (x >= pattern.section.length) { return }
-			console.log('bar', x + 1);
-			const bps = (!pattern.bpm ? 120 : pattern.bpm) / 60;
-			const delay = 1000 / bps;
-			const instrument = new Instrument();
-			let i = 0;
-			if (x === 0) {
-				instrument.play(pattern.section[x][i]);
-				i += 1;
+		// console.log('bar', x + 1);
+		const bps = pattern.bpm / 60;
+		const delay = 1000 / bps;
+		const instrument = new Instrument();
+		let i = 0;
+		if (x === 0) {
+			instrument.play(pattern.section[x][i]);
+			i += 1;
+		}
+		let interval = window.setInterval(() => {
+			instrument.play(pattern.section[x][i]);
+			i += 1;
+			if (i >= 4) { //end of bar
+				window.clearInterval(interval);
+				window.setTimeout(playSong(pattern, x + 1), delay);
 			}
-			let m = window.setInterval(() => {
-				instrument.play(pattern.section[x][i]);
-				i += 1;
-				if (i >= 4) { //end of bar
-					window.clearInterval(m);
-					window.setTimeout(playBar(pattern, x + 1), delay);
-				}
-			}, delay);
-
+		}, delay);
 	};
+	/*
+	// ================
+	// probably useless, delete that
 	const btnInit = () => {
         const btnArray = document.querySelectorAll('button');
         btnArray.forEach((btn, i) => {
@@ -53,13 +56,16 @@ const playerModule = (function () {
             btn.textContent = i + 1;
         });
     }
+	//=================
     const init = () => {
         // btnInit();
-		// playBar(patternModule.metronome, 0);
-		// playBar(patternModule.bassline, 0);
+		// playSong(patternModule.metronome, 0);
+		// playSong(patternModule.bassline, 0);
     };
     window.addEventListener('DOMContentLoaded', init);
+	*/
 	return {
-		playBar
+		playSong,
+		Instrument
 	}
 }());

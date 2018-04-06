@@ -2,17 +2,19 @@ const application = (function () {
 	'use strict';
 
 	let pattern;
-	const toggleActiveNotes = (e) => {
-		e.target.classList.toggle('active');
-		const currentColumn = e.target.classList.item(0);
+	const toggleActiveNotes = (element) => {
+		element.classList.toggle('active');
+		const currentColumn = element.classList.item(0);
 		const columnNotes = document.querySelectorAll('.' + currentColumn);
 		columnNotes.forEach((note) => {
-			if (note.classList.contains('active') && note !== e.target) {
+			if (note.classList.contains('active') && note !== element) {
 				note.classList.remove('active');
 			}
 		});
 	};
-	const playNote (note) = {}
+	const playNote = (element) => {
+		console.log(element)
+	};
 	const createPianoRoll = () => {
 		let td;
 		let tr;
@@ -39,8 +41,9 @@ const application = (function () {
 					td.setAttribute('data-beat', j);
 					td.classList.add('index_' + (i + 1));
 					td.onclick = (e) => {
-						editPattern(e.target);
-						toggleActiveNotes(e);
+						editSong(e.target);
+						toggleActiveNotes(e.target);
+						playNote(e.target);
 					};
 					tr.appendChild(td);
 					i += 1;
@@ -51,21 +54,19 @@ const application = (function () {
 		pianoRoll.classList.add('piano-roll');
 		main.appendChild(pianoRoll);
 	};
-	const editPattern = (element) => {
+	const editSong = (element) => {
 		const bar = element.attributes['data-bar'].value;
 		const beat = element.attributes['data-beat'].value;
 		const pitch = element.attributes['data-pitch'].value;
-		pattern.insertIntoBeat(bar, beat, pitch);
-		console.log(pattern.section);
-	}
+		pattern.insertNote(bar, beat, pitch);
+		// console.log(pattern.section);
+	};
 	const init = () => {
 		pattern = new patternModule.Pattern();
 		createPianoRoll();
-		const playbtn = document.querySelector('.play');
-		playbtn.onclick = () => {
-			console.log(pattern);
-			playerModule.playBar(pattern, 0);
-		}
+		const startBtn = document.querySelector('.play');
+		startBtn.onclick = () => { playerModule.playSong(pattern, 0) };
+		console.log(playerModule.Instrument);
 	};
 	window.addEventListener('DOMContentLoaded', init);
 }());
