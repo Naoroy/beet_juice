@@ -3,7 +3,7 @@ const patternModule = (function () {
 
 	const Pattern = function (option) {
 		const initPattern = (beats, bars) => {
-			if (typeof beats !number || typeof bars !number) { return }
+			if (typeof beats !== 'number' || typeof bars !== 'number') { return }
 			const pattern = [];
 			for (let i = 0; i < this.bars; i += 1) {
 				const bar = [];
@@ -14,9 +14,9 @@ const patternModule = (function () {
 			}
 			return pattern
 		};
-		this.beats = option.beats ? option.beats : 4;
-		this.bars = option.bars ? option.bars : 4;
-		this.bpm = option.bpm ? option.bpm : 120;
+		this.beats = option && option.beats ? option.beats : 4;
+		this.bars = option && option.bars ? option.bars : 4;
+		this.bpm = option && option.bpm ? option.bpm : 120;
 	    this.section = initPattern(this.beats, this.bars);
 	    this.insertNote = (bar, beat ,pitch) => {
 			if (typeof bar !== 'number' ||
