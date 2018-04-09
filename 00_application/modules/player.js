@@ -7,7 +7,7 @@ const playerModule = (function () {
     gainNode.gain.value = 0.3; // 10 %
 
 	const Instrument = function () {
-		this.duration = 1;
+		this.duration = .5;
 		this.play = (pitch, when) => {
 			if (!pitch && pitch !== 0) { return }
 			if (this.oscillator) { this.oscillator.disconnect(); }

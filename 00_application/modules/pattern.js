@@ -21,7 +21,11 @@ const patternModule = (function () {
 	    this.insertNote = (bar, beat ,pitch) => {
 			if (typeof bar !== 'number' ||
 				typeof beat !== 'number' ||
-				typeof pitch !== 'number') { return }
+				typeof pitch !== 'number') {
+					console.log('type not ok');
+					return
+				 }
+			console.log('type ok');
 			this.section[bar][beat] = this.section[bar][beat] === pitch ?
 				null :
 				pitch;

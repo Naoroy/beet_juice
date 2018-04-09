@@ -2,6 +2,15 @@ const application = (function () {
 	'use strict';
 
 	let pattern;
+	const editSong = (element) => {
+		console.log(element);
+		const bar = Number(element.attributes['data-bar'].value);
+		const beat = Number(element.attributes['data-beat'].value);
+		const pitch = Number(element.attributes['data-pitch'].value);
+		console.log(typeof bar,typeof  beat,typeof  pitch);
+		pattern.insertNote(bar, beat, pitch);
+		console.log(pattern.section[bar]);
+	};
 	const toggleActiveNotes = (element) => {
 		element.classList.toggle('active');
 		const currentColumn = element.classList.item(0);
@@ -13,7 +22,7 @@ const application = (function () {
 		});
 	};
 	const playNote = (element) => {
-		console.log(element)
+		console.log(element);
 	};
 	const createPianoRoll = () => {
 		let td;
@@ -43,7 +52,7 @@ const application = (function () {
 					td.onclick = (e) => {
 						editSong(e.target);
 						toggleActiveNotes(e.target);
-						playNote(e.target);
+						// playNote(e.target);
 					};
 					tr.appendChild(td);
 					i += 1;
@@ -54,19 +63,15 @@ const application = (function () {
 		pianoRoll.classList.add('piano-roll');
 		main.appendChild(pianoRoll);
 	};
-	const editSong = (element) => {
-		const bar = element.attributes['data-bar'].value;
-		const beat = element.attributes['data-beat'].value;
-		const pitch = element.attributes['data-pitch'].value;
-		pattern.insertNote(bar, beat, pitch);
-		// console.log(pattern.section);
-	};
 	const init = () => {
 		pattern = new patternModule.Pattern();
 		createPianoRoll();
 		const startBtn = document.querySelector('.play');
-		startBtn.onclick = () => { playerModule.playSong(pattern, 0) };
-		console.log(playerModule.Instrument);
+		startBtn.onclick = () => {
+			playerModule.playSong(pattern, 0)
+
+		};
+		// console.log(playerModule.Instrument);
 	};
 	window.addEventListener('DOMContentLoaded', init);
 }());
