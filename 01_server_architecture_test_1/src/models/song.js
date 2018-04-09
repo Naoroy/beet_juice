@@ -6,8 +6,8 @@ const patchSong = (request, callback) => {}
 const deleteSong = (request, callback) => {}
 
 module.exports = {
-    create: createSong,
-    get: getSong,
-    patch: patchSong,
-    delete: deleteSong
+  create: createSong,
+  get: getSong,
+  patch: patchSong,
+  delete: deleteSong,
 }

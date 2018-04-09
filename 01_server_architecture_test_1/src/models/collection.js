@@ -6,8 +6,8 @@ const patchCollection = (request, callback) => {};
 const deleteCollection = (request, callback) => {};
 
 module.exports = {
-    create: createCollection,
-    get: getCollection,
-    patch: patchCollection,
-    delete: deleteCollection
-}
+  create: createCollection,
+  get: getCollection,
+  patch: patchCollection,
+  delete: deleteCollection,
+};
