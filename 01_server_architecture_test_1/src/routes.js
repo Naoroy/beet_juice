@@ -1,46 +1,19 @@
-const router = require('express').Router();
-const user = require('./models/user');
+const express = require('express');
+const userRouter = require('./routes/user_router');
+const collectionRouter = require('./routes/collection_router');
+const songRouter = require('./routes/song_router');
+// const bodyParser = require('body-parser');
+
+const app = express();
+const router = express.Router();
 
 router.get('/', (request, response) => {
   response.status(200).send('ayyyy!!!');
 })
-  .get('/user', (request, response) => {
-    user.get((data) => {
-      response.status(200).send(JSON.stringify(data));
-    });
-  })
-  .post('/user', (request, response) => {
-    user.create(request.body, (error) => { // (error, data)
-      if (error) {
-        response.status(400).send('invalid parameters!');
-        return;
-      }
-      response.status(200).send('user created');
-    });
-  })
-  .patch('/user/:id', (request, response) => {
-    user.patch(request.body, (error) => { // (error, data)
-      if (error) {
-        response.status(400).send('invalid parameters!');
-        return;
-      }
-      response.status(200).send('user modified');
-    });
-  })
-  .delete('/user/:id', (request, response) => {
-    user.delete(request.body.id, (error) => { // (error, data)
-      if (error) {
-        response.status(400).send('invalid parameters!');
-        return;
-      }
-      response.status(200).send('user deleted');
-    });
-  })
-  .get('/user/collection', (request, response) => {
-    response.status(200).send('user\'s collection!!!');
-  })
-  .get('/user/collection/song', (request, response) => {
-    response.status(200).send('collection\'s song!!!');
-  });
+  .use(userRouter)
+  .use(collectionRouter)
+  .use(songRouter);
+
+app.use(router);
 
 module.exports = router;
