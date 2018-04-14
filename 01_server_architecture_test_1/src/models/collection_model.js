@@ -1,4 +1,4 @@
-const db = require('./db_connection.js');
+const db = require('../db_connection.js');
 
 const createCollection = (author, name, callback) => {
   const query = 'INSERT INTO Collection (name, author) ' +
@@ -15,16 +15,18 @@ const getCollection = (callback, id) => {
       callback(result);
     });
   } catch (error) {
-    console.log(error);
     callback();
   }
 };
-// const patchCollection = (request, callback) => {};
-// const deleteCollection = (request, callback) => {};
+const deleteCollection = (id, callback) => {
+  const query = `DELETE FROM Collection WHERE ID="${id}"`;
+  db.query(query, (error, result) => {
+    callback(result);
+  });
+};
 
 module.exports = {
   create: createCollection,
   get: getCollection,
-  // patch: patchCollection,
-  // delete: deleteCollection,
+  delete: deleteCollection,
 };

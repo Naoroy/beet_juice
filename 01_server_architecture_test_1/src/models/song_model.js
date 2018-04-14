@@ -1,4 +1,4 @@
-const db = require('./db_connection.js');
+const db = require('../db_connection.js');
 
 const createSong = (request, callback) => {}
 const getSong = (request, callback) => {}
@@ -10,4 +10,4 @@ module.exports = {
   get: getSong,
   patch: patchSong,
   delete: deleteSong,
-}
+};

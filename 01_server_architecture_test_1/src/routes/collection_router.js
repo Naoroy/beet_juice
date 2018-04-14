@@ -16,6 +16,12 @@ collectionRouter.get('/user/collection/:id', (request, response) => {
     collection.create(id, name, () => {
       response.status(200).send(`Collection "${name}" successfully created`);
     });
+  })
+  .delete('/user/collection/:collection', (request, response) => {
+    const collectionID = request.params.collection;
+    collection.delete(collectionID, () => {
+      response.status(200).send('Collection deleted successfully');
+    });
   });
 
 module.exports = collectionRouter;

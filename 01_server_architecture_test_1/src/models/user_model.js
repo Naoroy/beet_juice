@@ -1,14 +1,10 @@
-const db = require('./db_connection.js');
+const db = require('../db_connection.js');
 
 const createUsers = (data, callback) => {
-  // if (!data) throw new error;
-  const {
-    nm,
-    ml,
-    pw,
-    av,
-  } = data;
-  console.log(nm, ml, pw, av);
+  if (!data) {
+    callback();
+    return;
+  }
   const name = data.name ? data.name : '';
   const mail = data.mail;
   const password = data.password;
@@ -45,7 +41,13 @@ const patchUsers = (data, callback) => {
     });
   }, data.id);
 };
-const deleteUsers = (id, callback) => {
+const deleteUsers = (params, callback) => {
+  const { id } = params;
+  console.log(id);
+  if (!id) {
+    console.log('nope');
+    return;
+  }
   const query = `DELETE FROM User WHERE ID = ${id}`;
   db.query(query, (error, result) => {
     callback(error, result);
