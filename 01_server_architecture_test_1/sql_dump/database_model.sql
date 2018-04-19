@@ -1,0 +1,49 @@
+-- yeahhhhhhhh --
+
+CREATE DATABASE Beetmaking;
+USE Beetmaking;
+
+CREATE TABLE user (
+  id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(35) NOT NULL,
+  mail VARCHAR(75) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  avatar VARCHAR(35)
+);
+CREATE TABLE song (
+  id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(35),
+  file_location VARCHAR(75) NOT NULL,
+  collections INT UNSIGNED NOT NULL
+);
+CREATE TABLE collection (
+  id SMALLINT UNSIGNED PRIMARY KEY,
+  name VARCHAR(35),
+  author SMALLINT UNSIGNED NOT NULL,
+
+  CONSTRAINT FK_user
+    FOREIGN KEY (author)
+    REFERENCES user(id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE = INNODB;
+CREATE TABLE collection_has_songs (
+  song_id SMALLINT UNSIGNED NOT NULL,
+  collection_id SMALLINT UNSIGNED NOT NULL,
+  private BOOLEAN NOT NULL,
+
+  CONSTRAINT FK_song
+    FOREIGN KEY (song_id)
+    REFERENCES song(id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+  CONSTRAINT FK_collection
+    FOREIGN KEY (collection_id)
+    REFERENCES collection(id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+  CONSTRAINT PK_ID
+    PRIMARY KEY (song_id, collection_id)
+) ENGINE = INNODB;
