@@ -25,7 +25,10 @@ body {
 	background: lightgreen;
 }
 .play {
-	width: 30vw;
-	margin: auto;
+	width: 20vw;
+  height: 10vh;
+  margin: 5vh;
+  display: block;
+	margin: 5vh auto;
 	font-size: 30;
 }
