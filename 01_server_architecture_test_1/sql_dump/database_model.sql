@@ -1,5 +1,3 @@
--- yeahhhhhhhh --
-
 CREATE DATABASE Beetmaking;
 USE Beetmaking;
 
